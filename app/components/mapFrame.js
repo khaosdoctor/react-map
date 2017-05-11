@@ -49,13 +49,13 @@ var mapFrame = React.createClass({
             <button className="map-close" onClick={this.closeMap} title="Fechar">X</button>  
             <div className="panel-body">
               <address>
-                <p className="street"><h2>{this.state.address.street}</h2></p>
+                <p className="street"><strong>{this.state.address.street}</strong></p>
                 <p className="neighbourhood">{this.state.address.neighbourhood}</p>
                 <p className="city">{this.state.address.city + ' - ' + this.state.address.state}</p>
                 <p className="zipcode">{this.state.address.zipcode}</p>
               </address>
               <figure>
-               
+                { //geometry maps goes here }
               </figure>
             </div>
           </div>
