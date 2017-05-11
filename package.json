@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.16.1",
+    "opn": "^5.0.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
@@ -18,7 +19,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "./node_modules/.bin/webpack",
     "watch": "./node_modules/.bin/webpack -w",
-    "start": "./public/index.html"
+    "start": "npm run pack && node index.js"
   },
   "repository": {
     "type": "git",
