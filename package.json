@@ -1,0 +1,37 @@
+{
+  "name": "react-map",
+  "version": "1.0.0",
+  "description": "React Map Component",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^2.5.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "./node_modules/.bin/webpack",
+    "watch": "./node_modules/.bin/webpack -w",
+    "start": "./public/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaosdoctor/react-map.git"
+  },
+  "keywords": [
+    "react",
+    "map"
+  ],
+  "author": "Lucas Santos <lhs.santoss@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/khaosdoctor/react-map/issues"
+  },
+  "homepage": "https://github.com/khaosdoctor/react-map#readme"
+}
