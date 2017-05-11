@@ -4,6 +4,7 @@
   "description": "React Map Component",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.16.1",
     "google-maps": "^3.2.1",
     "jsonp": "^0.2.1",
     "opn": "^5.0.0",
