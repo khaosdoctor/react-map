@@ -4,20 +4,10 @@ var HOST = 'https://viacep.com.br/ws/';
 
 var mapService = {
   getInfoByCode: function (zipcode, cb) {
-    return jsonp(`${host}/${zipcode}/json`, null, function (err, data) {
-      if (err) throw err
-      else {
-        return data
-      }
-    })
+    return jsonp(`${HOST}/${zipcode}/json`, null, cb)
   },
-  getGeometry: function (location) {
-    return jsonp(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.logradouro}-${location.bairro}-${location.localidade}`, null, function (err, data) {
-      if (err) throw err
-      else {
-        return data
-      }
-    })
+  getGeometry: function (location, cb) {
+    return jsonp(`https://maps.googleapis.com/maps/api/geocode/jsonp?address=${location.street}-${location.neighbourhood}-${location.city}`, null, cb) //Google does not support this, change to axios
   }
 }
 
