@@ -1,6 +1,6 @@
 var React = require('react')
 var MapsService = require('../services/mapService.js')
-//import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
+// import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
 
 var mapFrame = React.createClass({
   getInitialState: function () {
@@ -19,7 +19,7 @@ var mapFrame = React.createClass({
   closeMap: function () {
     this.setState({ show: false })
   },
-  componentWillReceiveProps: function(props) {
+  componentWillReceiveProps: function (props) {
     MapsService.getInfoByCode(props.zipcode, function (err, data) {
       if (err) throw err
       else {
@@ -36,36 +36,35 @@ var mapFrame = React.createClass({
     }.bind(this))
   },
   getLocationGeometry: function () {
-      MapsService.getGeometry(this.state.address)
-          .then(function(response) {
-              var geometry = response.data.results.pop().geometry
-              this.setState({geometry: geometry, show: true})
+    MapsService.getGeometry(this.state.address)
+          .then(function (response) {
+            var geometry = response.data.results.pop().geometry
+            this.setState({geometry: geometry, show: true})
           }.bind(this))
   },
   render: function () {
-      var map = (this.props.zipcode && this.state.show) ? (
-        <section className="map-frame col-sm-12">
-          <div className="panel panel-default">
-            <button className="map-close" onClick={this.closeMap} title="Fechar">X</button>  
-            <div className="panel-body">
-              <address>
-                <p className="street"><strong>{this.state.address.street}</strong></p>
-                <p className="neighbourhood">{this.state.address.neighbourhood}</p>
-                <p className="city">{this.state.address.city + ' - ' + this.state.address.state}</p>
-                <p className="zipcode">{this.state.address.zipcode}</p>
-              </address>
-              <figure>
-                { //geometry maps goes here }
+    var map = (this.props.zipcode && this.state.show) ? (
+      <section className='map-frame col-sm-12'>
+        <div className='panel panel-default'>
+          <button className='map-close' onClick={this.closeMap} title='Fechar'>X</button>
+          <div className='panel-body'>
+            <address>
+              <p className='street'><strong>{this.state.address.street}</strong></p>
+              <p className='neighbourhood'>{this.state.address.neighbourhood}</p>
+              <p className='city'>{this.state.address.city + ' - ' + this.state.address.state}</p>
+              <p className='zipcode'>{this.state.address.zipcode}</p>
+            </address>
+            <figure>
+                //geometry maps goes here
               </figure>
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
       ) : null
-    
-      return map
+
+    return map
   }
 })
-
 
 mapFrame.propTypes = {
   zipcode: React.PropTypes.string.isRequired

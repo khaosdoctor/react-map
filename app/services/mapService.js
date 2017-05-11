@@ -1,7 +1,7 @@
 var jsonp = require('jsonp')
 var axios = require('axios')
 
-var HOST = 'https://viacep.com.br/ws/';
+var HOST = 'https://viacep.com.br/ws/'
 
 var mapService = {
   getInfoByCode: function (zipcode, cb) {

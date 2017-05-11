@@ -3,18 +3,18 @@ var AddressSearchBar = require('./addressSearchBar.js')
 var MapFrame = require('./mapFrame.js')
 
 var reactMap = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       zipCode: null
     }
   },
-  updateZipCode: function(code) {
+  updateZipCode: function (code) {
     this.setState({ zipCode: code })
   },
-  render: function() {
+  render: function () {
     return (
-      <div className="container">
-        <h1 className="col-sm-12 text-center">Consulta de Endereço</h1>
+      <div className='container'>
+        <h1 className='col-sm-12 text-center'>Consulta de Endereço</h1>
         <AddressSearchBar
           updateZipCode={this.updateZipCode}
         />
