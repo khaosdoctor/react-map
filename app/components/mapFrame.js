@@ -1,6 +1,6 @@
 var React = require('react')
 var MapsService = require('../services/mapService.js')
-import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
+//import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
 
 var mapFrame = React.createClass({
   getInitialState: function () {
@@ -9,19 +9,42 @@ var mapFrame = React.createClass({
         street: null,
         neighbourhood: null,
         city: null,
-        state: null
+        state: null,
+        zipcode: null
       },
-      geometry: null
+      geometry: null,
+      show: this.props.show
     }
   },
   closeMap: function () {
-    this.setState(this.getInitialState());
+    this.setState({ show: false })
   },
   componentWillReceiveProps: function(props) {
-    console.log(MapsService.getInfoByCode(zipcode))
+    MapsService.getInfoByCode(props.zipcode, function (err, data) {
+      if (err) throw err
+      else {
+        this.setState({
+          address: {
+            street: data.logradouro + ' ' + data.complemento,
+            neighbourhood: data.bairro,
+            city: data.localidade,
+            state: data.uf,
+            zipcode: data.cep
+          }
+        }, this.getLocationGeometry)
+      }
+    }.bind(this))
+  },
+  getLocationGeometry: function () {
+    MapsService.getGeometry(this.state.address, function (err, data) {
+      if (err) throw err
+      else {
+        console.log(data)
+      }
+    }.bind(this))
   },
   render: function () {
-      var map = (this.props.zipcode) ? (
+      var map = (this.props.zipcode && this.state.show) ? (
         <section className="map-frame col-sm-12">
           <div className="panel panel-default">
             <button className="map-close" onClick={this.closeMap} title="Fechar">X</button>  
@@ -30,17 +53,10 @@ var mapFrame = React.createClass({
                 <p className="street"><h2>{this.state.address.street}</h2></p>
                 <p className="neighbourhood">{this.state.address.neighbourhood}</p>
                 <p className="city">{this.state.address.city + ' - ' + this.state.address.state}</p>
-                <p className="zipcode">{this.props.zipcode}</p>
+                <p className="zipcode">{this.state.address.zipcode}</p>
               </address>
               <figure>
-                <GoogleMapLoader
-                  containerElement={<div className="map-results" style={{ height: 500, width: '100%' }} />}
-                  googleMapElement={
-                    <GoogleMap defaultZoom={15} center={{ lat: this.state.geometry.lat, lng: this.state.geometry.lng }} >
-                      <Marker position={{ lat: this.state.geometry.lat, lng: this.state.geometry.lng }} />
-                    </GoogleMap>  
-                  }
-                />
+               
               </figure>
             </div>
           </div>
@@ -53,7 +69,7 @@ var mapFrame = React.createClass({
 
 
 mapFrame.propTypes = {
-  zipcode: React.PropTypes.func.isRequired
+  zipcode: React.PropTypes.string.isRequired
 }
 
-export default mapFrame
+module.exports = mapFrame
