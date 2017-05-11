@@ -36,12 +36,11 @@ var mapFrame = React.createClass({
     }.bind(this))
   },
   getLocationGeometry: function () {
-    MapsService.getGeometry(this.state.address, function (err, data) {
-      if (err) throw err
-      else {
-        console.log(data)
-      }
-    }.bind(this))
+      MapsService.getGeometry(this.state.address)
+          .then(function(response) {
+              var geometry = response.data.results.pop().geometry
+              this.setState({geometry: geometry, show: true})
+          }.bind(this))
   },
   render: function () {
       var map = (this.props.zipcode && this.state.show) ? (
