@@ -1,6 +1,5 @@
 var React = require('react')
 var MapsService = require('../services/mapService.js')
-// import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
 
 var mapFrame = React.createClass({
   getInitialState: function () {
@@ -13,7 +12,7 @@ var mapFrame = React.createClass({
         zipcode: null
       },
       geometry: null,
-      show: this.props.show
+      show: true
     }
   },
   closeMap: function () {
@@ -56,7 +55,7 @@ var mapFrame = React.createClass({
             </address>
             <figure>
                 //geometry maps goes here
-              </figure>
+            </figure>
           </div>
         </div>
       </section>
