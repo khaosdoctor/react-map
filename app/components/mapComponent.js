@@ -20,10 +20,10 @@ var mapComponent = React.createClass({
   render: function () {
     var map = (this.state.geometry) ? (
       <div className="map">
-        <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${this.state.geometry.lat},${this.state.geometry.lng}&zoom=15&size=800x300&markers=color:red|${this.state.geometry.lat},${this.state.geometry.lng}`} alt={this.props.address.street}/>
+        <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${this.state.geometry.lat},${this.state.geometry.lng}&zoom=15&size=800x300&markers=color:red|${this.state.geometry.lat},${this.state.geometry.lng}&key=AIzaSyCdgu28FfY-xqOhemG_GrfWoyw_pTowD3M`} alt={this.props.address.street}/>
       </div>
     ) : (
-      <div className="alert alert-danger">Ops, parece que este não é um cep válido</div>
+      <div className="alert alert-danger">Ops, parece que houve algum problema</div>
     )
 
     return map
