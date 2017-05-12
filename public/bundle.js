@@ -10206,7 +10206,7 @@ module.exports = getIteratorFn;
 
 var React = __webpack_require__(26);
 var AddressSearchBar = __webpack_require__(109);
-var MapFrame = __webpack_require__(110);
+var SearchResult = __webpack_require__(110);
 
 var reactMap = React.createClass({
   displayName: 'reactMap',
@@ -10231,7 +10231,7 @@ var reactMap = React.createClass({
       React.createElement(AddressSearchBar, {
         updateZipCode: this.updateZipCode
       }),
-      React.createElement(MapFrame, {
+      React.createElement(SearchResult, {
         zipcode: this.state.zipCode
       })
     );
@@ -11101,7 +11101,7 @@ const React = __webpack_require__(26);
 const ReactDOM = __webpack_require__(89);
 const ReactMap = __webpack_require__(88);
 
-ReactDOM.render(React.createElement(ReactMap, null), document.getElementById("app"));
+ReactDOM.render(React.createElement(ReactMap, null), document.getElementById('app'));
 
 /***/ }),
 /* 109 */
@@ -11110,7 +11110,7 @@ ReactDOM.render(React.createElement(ReactMap, null), document.getElementById("ap
 var React = __webpack_require__(26);
 
 var addressSearchBar = React.createClass({
-  displayName: "addressSearchBar",
+  displayName: 'addressSearchBar',
 
   handleSubmit: function (e) {
     e.preventDefault();
@@ -11118,35 +11118,35 @@ var addressSearchBar = React.createClass({
   },
   render: function () {
     return React.createElement(
-      "section",
-      { className: "address-bar col-sm-12" },
+      'section',
+      { className: 'address-bar col-sm-12' },
       React.createElement(
-        "div",
-        { className: "jumbotron" },
+        'div',
+        { className: 'jumbotron' },
         React.createElement(
-          "h2",
-          { className: "row" },
-          "Consultar"
+          'h2',
+          { className: 'row' },
+          'Consultar'
         ),
         React.createElement(
-          "div",
-          { className: "row" },
+          'div',
+          { className: 'row' },
           React.createElement(
-            "form",
-            { className: "form", onSubmit: this.handleSubmit },
+            'form',
+            { className: 'form', onSubmit: this.handleSubmit },
             React.createElement(
-              "div",
-              { className: "form-group col-sm-6" },
+              'div',
+              { className: 'form-group col-sm-6' },
               React.createElement(
-                "label",
-                { htmlFor: "zipcode" },
-                "CEP:",
-                React.createElement("input", { type: "text", name: "zipcode", required: true, autoFocus: true, placeholder: "Ex: 02050-010", ref: "zipcode", className: "form-control" })
+                'label',
+                { htmlFor: 'zipcode' },
+                'CEP:',
+                React.createElement('input', { type: 'text', name: 'zipcode', required: true, autoFocus: true, placeholder: 'Ex: 02050-010', ref: 'zipcode', className: 'form-control' })
               ),
               React.createElement(
-                "button",
-                { type: "submit", className: "btn btn-primary ml" },
-                "Buscar"
+                'button',
+                { type: 'submit', className: 'btn btn-primary ml' },
+                'Buscar'
               )
             )
           )
@@ -11168,7 +11168,7 @@ module.exports = addressSearchBar;
 
 var React = __webpack_require__(26);
 var MapsService = __webpack_require__(111);
-//import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
+var GMaps = __webpack_require__(539);
 
 var mapFrame = React.createClass({
   displayName: 'mapFrame',
@@ -11182,8 +11182,7 @@ var mapFrame = React.createClass({
         state: null,
         zipcode: null
       },
-      geometry: null,
-      show: this.props.show
+      show: true
     };
   },
   closeMap: function () {
@@ -11191,7 +11190,10 @@ var mapFrame = React.createClass({
   },
   componentWillReceiveProps: function (props) {
     MapsService.getInfoByCode(props.zipcode, function (err, data) {
-      if (err) throw err;else {
+      if (err) {
+        console.log(err);
+        this.setState({ show: false });
+      } else {
         this.setState({
           address: {
             street: data.logradouro + ' ' + data.complemento,
@@ -11199,19 +11201,14 @@ var mapFrame = React.createClass({
             city: data.localidade,
             state: data.uf,
             zipcode: data.cep
-          }
-        }, this.getLocationGeometry);
+          },
+          show: true
+        });
       }
     }.bind(this));
   },
-  getLocationGeometry: function () {
-    MapsService.getGeometry(this.state.address).then(function (response) {
-      var geometry = response.data.results.pop().geometry;
-      this.setState({ geometry: geometry, show: true });
-    }.bind(this));
-  },
   render: function () {
-    var map = this.props.zipcode && this.state.show ? React.createElement(
+    var map = this.state.address.street && this.state.show ? React.createElement(
       'section',
       { className: 'map-frame col-sm-12' },
       React.createElement(
@@ -11219,7 +11216,7 @@ var mapFrame = React.createClass({
         { className: 'panel panel-default' },
         React.createElement(
           'button',
-          { className: 'map-close', onClick: this.closeMap, title: 'Fechar' },
+          { className: 'map-close btn btn-danger pull-right', onClick: this.closeMap, title: 'Fechar' },
           'X'
         ),
         React.createElement(
@@ -11256,7 +11253,9 @@ var mapFrame = React.createClass({
           React.createElement(
             'figure',
             null,
-            console.log(this.state.geometry)
+            React.createElement(GMaps, {
+              address: this.state.address
+            })
           )
         )
       )
@@ -26482,6 +26481,370 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var React = __webpack_require__(26);
+var MapsService = __webpack_require__(111);
+
+var mapComponent = React.createClass({
+  displayName: 'mapComponent',
+
+  getInitialState: function () {
+    return {
+      geometry: null
+    };
+  },
+  componentWillReceiveProps: function (props) {
+    MapsService.getGeometry(props.address).then(function (response) {
+      var geometry = response.data.results.pop().geometry.location;
+      this.setState({ geometry: geometry });
+    }.bind(this)).catch(function (err) {
+      console.log(err);
+    });
+  },
+  render: function () {
+    var map = this.state.geometry ? React.createElement(
+      'div',
+      { className: 'map' },
+      React.createElement('img', { src: `https://maps.googleapis.com/maps/api/staticmap?center=${this.state.geometry.lat},${this.state.geometry.lng}&zoom=15&size=800x300&markers=color:red|${this.state.geometry.lat},${this.state.geometry.lng}`, alt: this.props.address.street })
+    ) : React.createElement(
+      'div',
+      { className: 'alert alert-danger' },
+      'Ops, parece que este n\xE3o \xE9 um cep v\xE1lido'
+    );
+
+    return map;
+  }
+});
+
+mapComponent.propTypes = {
+  address: React.PropTypes.object.isRequired
+};
+
+module.exports = mapComponent;
 
 /***/ })
 /******/ ]);
