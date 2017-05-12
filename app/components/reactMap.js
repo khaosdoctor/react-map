@@ -1,6 +1,6 @@
 var React = require('react')
 var AddressSearchBar = require('./addressSearchBar.js')
-var MapFrame = require('./mapFrame.js')
+var SearchResult = require('./mapFrame.js')
 
 var reactMap = React.createClass({
   getInitialState: function () {
@@ -18,7 +18,7 @@ var reactMap = React.createClass({
         <AddressSearchBar
           updateZipCode={this.updateZipCode}
         />
-        <MapFrame
+        <SearchResult
           zipcode={this.state.zipCode}
         />
       </div>
