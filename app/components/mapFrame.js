@@ -1,5 +1,6 @@
 var React = require('react')
 var MapsService = require('../services/mapService.js')
+var GMaps = require('./mapComponent.js')
 
 var mapFrame = React.createClass({
   getInitialState: function () {
@@ -11,7 +12,6 @@ var mapFrame = React.createClass({
         state: null,
         zipcode: null
       },
-      geometry: null,
       show: true
     }
   },
@@ -20,7 +20,10 @@ var mapFrame = React.createClass({
   },
   componentWillReceiveProps: function (props) {
     MapsService.getInfoByCode(props.zipcode, function (err, data) {
-      if (err) throw err
+      if (err) {
+        console.log(err)
+        this.setState({show:false})
+      }
       else {
         this.setState({
           address: {
@@ -29,23 +32,17 @@ var mapFrame = React.createClass({
             city: data.localidade,
             state: data.uf,
             zipcode: data.cep
-          }
-        }, this.getLocationGeometry)
+          },
+          show: true
+        })
       }
     }.bind(this))
   },
-  getLocationGeometry: function () {
-    MapsService.getGeometry(this.state.address)
-          .then(function (response) {
-            var geometry = response.data.results.pop().geometry
-            this.setState({geometry: geometry, show: true})
-          }.bind(this))
-  },
   render: function () {
-    var map = (this.props.zipcode && this.state.show) ? (
+    var map = (this.state.address.street && this.state.show) ? (
       <section className='map-frame col-sm-12'>
         <div className='panel panel-default'>
-          <button className='map-close' onClick={this.closeMap} title='Fechar'>X</button>
+          <button className='map-close btn btn-danger pull-right' onClick={this.closeMap} title='Fechar'>X</button>
           <div className='panel-body'>
             <address>
               <p className='street'><strong>{this.state.address.street}</strong></p>
@@ -54,7 +51,9 @@ var mapFrame = React.createClass({
               <p className='zipcode'>{this.state.address.zipcode}</p>
             </address>
             <figure>
-                //geometry maps goes here
+              <GMaps
+                address={this.state.address}
+              />
             </figure>
           </div>
         </div>
